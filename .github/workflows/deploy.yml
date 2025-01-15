@@ -1,56 +1,260 @@
-name: Deploy site
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мениджър на пароли</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #menu, #addPassword {
+            display: none; /* Скриваме секциите по подразбиране */
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .success {
+            color: green;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мениджър на пароли</h1>
+    </header>
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+    <!-- Бутон за вход -->
+    <button onclick="showMenu()">Вход в системата</button>
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    <!-- Меню -->
+    <div id="menu">
+        <h2>Главно меню</h2>
+        <ul>
+            <li><button onclick="showAddPassword()">Добави нова парола</button></li>
+            <li><button onclick="logout()">Изход</button></li>
+        </ul>
+    </div>
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    <!-- Форма за добавяне на парола -->
+    <div id="addPassword">
+        <h2>Добави нова парола</h2>
+        <form id="passwordForm">
+            <label for="password">Въведи парола (минимум 10 символа):</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <span id="passwordFeedback" class="error"></span><br><br>
+            <button type="button" onclick="validatePassword()">Добави парола</button>
+        </form>
+        <button onclick="backToMenu()">Обратно към менюто</button>
+    </div>
 
-# Allow one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    <script>
+        function showMenu() {
+            document.getElementById('menu').style.display = 'block';
+        }
 
-jobs:
-  # Build job
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@bfefad842bb982ff05b233bcbc1571d97a87e69f # v1.206.0
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
-      - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default
-        uses: actions/upload-pages-artifact@v3
+        function showAddPassword() {
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('addPassword').style.display = 'block';
+        }
 
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        function validatePassword() {
+            const passwordInput = document.getElementById('password').value;
+            const feedback = document.getElementById('passwordFeedback');
+
+            if (passwordInput.length >= 10) {
+                feedback.textContent = "Паролата е валидна!";
+                feedback.className = "success";
+            } else {
+                feedback.textContent = "Паролата трябва да бъде поне 10 символа!";
+                feedback.className = "error";
+            }
+        }
+
+        function backToMenu() {
+            document.getElementById('addPassword').style.display = 'none';
+            document.getElementById('menu').style.display = 'block';
+        }
+
+        function logout() {
+            alert('Излязохте от системата.');
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('addPassword').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+Footer
+© 2025 GitHub, Inc.
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мениджър на пароли</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .no-data {
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мениджър на пароли</h1>
+    </header>
+
+    <!-- Форма за добавяне на нова услуга -->
+    <form id="passwordForm">
+        <label for="service_name">Име на услугата:</label>
+        <input type="text" id="service_name" name="service_name" required>
+
+        <label for="email">Имейл:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="username">Потребителско име:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Парола:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="button" onclick="savePassword()">Запази</button>
+    </form>
+
+    <!-- Таблица със съхранените пароли -->
+    <section>
+        <h2>Съхранени пароли</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Услуга</th>
+                    <th>Имейл</th>
+                    <th>Потребителско име</th>
+                    <th>Парола</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody id="passwordTableBody">
+                <tr class="no-data">
+                    <td colspan="5">Няма съхранени данни</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        const passwords = [];
+
+        function savePassword() {
+            // Вземаме данните от формата
+            const serviceName = document.getElementById('service_name').value;
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Проверяваме дали всички полета са попълнени
+            if (serviceName && email && username && password) {
+                passwords.push({ serviceName, email, username, password });
+                updateTable();
+                document.getElementById('passwordForm').reset();
+                alert('Данните са успешно запазени!');
+            } else {
+                alert('Моля, попълнете всички полета!');
+            }
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('passwordTableBody');
+            tableBody.innerHTML = ''; // Изчистваме таблицата
+
+            passwords.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.serviceName}</td>
+                    <td>${entry.email}</td>
+                    <td>${entry.username}</td>
+                    <td>${entry.password}</td>
+                    <td><button onclick="deletePassword(${index})">Изтрий</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+            // Ако няма данни, показваме съобщение
+            if (passwords.length === 0) {
+                const noDataRow = document.createElement('tr');
+                noDataRow.classList.add('no-data');
+                noDataRow.innerHTML = '<td colspan="5">Няма съхранени данни</td>';
+                tableBody.appendChild(noDataRow);
+            }
+        }
+        function deletePassword(index) {
+            passwords.splice(index, 1); // Премахваме записа
+            updateTable(); // Актуализираме таблицата
+        }
+  </script>  
+</body>
+</html>
