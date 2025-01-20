@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бутони</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .register {
+            background-color: #4CAF50;
+        }
+        .register:hover {
+            background-color: #45a049;
+        }
+        .login {
+            background-color: #007BFF;
+        }
+        .login:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            background-color: #FFC107;
+        }
+        .forgot-password:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="register">Регистрация</button>
+        <button class="login">Вход</button>
+        <button class="forgot-password">Забравена парола</button>
+    </div>
+</body>
+</html>
